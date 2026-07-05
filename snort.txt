@@ -1,0 +1,86 @@
+SNORT:
+-------------------------------------------------------------------------------
+IF SNORT IS NOT WORKING:
+
+sudo systemctl stop snort
+sudo killall snort
+sudo systemctl disable snort
+sudo systemctl daemon-reload
+sudo apt purge --auto-remove snort snort-common snort-rules-default
+sudo rm -rf /etc/snort
+sudo rm -rf /var/log/snort
+sudo rm -rf /usr/local/bin/snort 
+sudo sed -i 's/include $RULE_PATH/#include $RULE_PATH/' /etc/snort/snort.conf
+sudo dpkg -reconfigure snort
+sudo apt clean
+sudo apt update
+
+INSTALLTION:
+sudo apt install snort -y
+
+----- Analyse config file:
+```````````````````````
+sed -i 's/include $RULE_PATH/#include $RULE_PATH/' /etc/snort/snort.conf
+
+# vim /etc/snort/snort.conf
+
+Edit This Line:
+ipvar HOME_NET 192.168.x.0/24 ....<your n/W address>
+
+and uncomment 
+on line 590: 
+include $RULE_PATH/local.rules
+
+#Be in /etc/snort for running the below commands
+
+----Live logs in console 
+sudo snort -A console -q -c snort.conf 
+
+----Test
+sudo snort -T -i ens37 -c snort.conf 
+
+SNORT RULES:
+-----------------------------------------------------------------------------
+Check as per questions given in exam:
+
+1)alert tcp any any -> $HOME_NET any (flags: S; msg: "SYN Packet"; sid: 1000003; rev: 1;)------------for specific flag
+<<>>hping3 -S 192.168.x.x -p 80 -c 1
+<<>>nmap -sS 192.168.x.x
+
+2)alert ip any any -> any any (msg: "IP Packet detected"; sid: 100001; rev:1;)----------just ping
+<<>>ping 192.168.x.x
+
+3.) Detect multiple Failed SSH Login attempts (Possible Brute-Force) on port 22
+
+alert tcp any any -> any 22 (msg:"SSH Brute Force"; flow:to_server,established; detection_filter:track by_src, count 5, seconds 60; content:"Failed password"; nocase; sid:10001; rev:1;) 
+<<>>do the ssh
+
+4)Detects SQL Injection attempts containing ‘OR 1=1’ in HTTP Traffic.
+
+alert tcp any any -> any 80 (msg:"SQL Injection Detected"; flow:to_server,established; content:"OR 1=1"; nocase; http_uri; sid:10002; rev:1;) 
+<<>>curl "http://192.168.x.x/login.php?username=admin' OR 1=1--&password=test"
+<<>>curl "http://192.168.x.x/?id=1 OR 1=1"
+
+5) Detect DNS Queries for suspicious domain ending with .xyz 
+
+alert udp any any -> any 53 (msg:"Suspicious DNS Query"; flow:to_server; content:".xyz"; nocase; dns_query; sid:10003; rev:1;) 
+<<>>nslookup test.xyz
+<<>>dig test.xyz
+
+6)Detects access to known malicious IP X.X.X.X
+
+alert ip any any -> 203.0.113.50 any (msg:"Access to 203.0.113.50"; sid:10004; rev:1;) 
+<<>>ping 203.0.113.50
+<<>>curl http://203.0.113.50
+<<>>nc 203.0.113.50 80
+
+7) Detects TCP SYN Port scans targeting your web server x.x.x.x
+
+alert tcp any any -> 192.168.1.10 80 (msg:"TCP SYN Scan Detected"; flags:S; detection_filter:track by_src, count 10, seconds 30; sid:10005; rev:1;) 
+<<>>nmap -sS -Pn -p 80 192.168.1.10
+<<>>hping3 -S 192.168.1.10 -p 80 -c 15
+
+
+
+
+

