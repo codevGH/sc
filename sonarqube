@@ -71,41 +71,32 @@ Choose common command based on OS (Linux / Windows / macOS):
  -> Select "Python" (pysonar)
 
 Install dependency:
-wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-8.0.1.6346-linux-x64.zip  
+
+# wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-8.0.1.6346-linux-x64.zip
+# unzip sonar-scanner-cli-8.0.1.6346-linux-x64.zip
+# cd sonar-scanner-8.0.1.6346-linux-x64/bin/
+# ln -s /root/sonar/sonar-scanner-8.0.1.6346-linux-x64/bin/sonar-scanner /bin/sonar-scanner
+
 
 Install pysonar:
  pip install pysonar-scanner --break-system-package
 
-Paste the 2nd command shown on the SonarQube site (project-specific run command),
-e.g.:
- pysonar
-
 
 ======================================================
-5. RUNNING A SCAN (ALTERNATIVE / MANUAL SETUP)
+5. SCANNING A SAMPLE PROJECT (VULN-BANK)
 ======================================================
 
-If scanner not available as a package:
+mkdir sonar && cd sonar
+git clone https://github.com/Commando-X/vuln-bank.git
+cd vuln-bank
 
- mkdir sonar
- unzip <scanner-zip> -d sonar_folder
+#Execute this type of command shown in your dashboard:
 
- cd .sonar
- ls
- cat report-task.txt
+pysonar \
+  --sonar-host-url=http://192.168.85.131:9000 \
+  --sonar-token=sqp_dc31d40ff1ca6f37d82d29a12cc47894253bee82 \
+  --sonar-project-key=itiss2
 
 
-======================================================
-6. SCANNING A SAMPLE PROJECT (VULN-BANK)
-======================================================
 
-Clone the sample vulnerable project:
- git clone <vulnbank-repo-url>
- cd vuln-bank
-
-Install scanner in the project folder:
- pip install pysonar --break-system-package
-
-Run the 2nd command from the SonarQube site (project token / run command):
- pysonar
 
