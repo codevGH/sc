@@ -1,0 +1,60 @@
+NMAP commands:
+---------------------------------------------------------------------
+
+simple scan
+nmap -sn <target ip>
+
+port scan
+nmap -F <target ip>
+
+first 1000 tcp port scan
+nmap <target ip>
+
+SYN scan(half open scan)
+nmap -sS <target ip>
+
+TCP scan
+nmap -sT <target ip>
+
+UDP
+nmap -sU <target ip>
+
+all ports 65535
+nmap -p- <target ip>
+
+version
+nmap -sV <target ip>
+
+OS
+nmap -O <target ip>
+
+all OS,version 
+nmap -A <target ip>
+
+safe script scan
+nmap -sC <target ip>
+
+vulnerability scan for target
+nmap --script vuln <target ip>
+
+malware scan
+nmap --script malware <target ip>
+
+
+firewall bypass
+nmap -f <target ip>
+
+Decoy Scan -mix fake ips with real ip
+nmap -D <fake ip1>,<fake ip2>,<attacker ip> <target ip>
+
+verbose sequential scan
+nmap -v -r <target ip>
+
+skip host discovery
+nmap -Pn <target ip>
+
+
+ICMP echo ping
+nmap -PE <target ip>
+
+
