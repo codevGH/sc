@@ -15,7 +15,13 @@ msfconsole
 new tab:
 Create python server:
 cd /home/kali/demo
-python3 -m http.server --bind 80 ........the .exe file will be  hosted
+sudo python3 -m http.server 80 ........the .exe file will be  hosted
+
+to see jobs: jobs -l
+to kill jobs: kill %1
+              kill %2
+              kill %3
+
 
 Now go to Windows machine:
 ---------------------------
