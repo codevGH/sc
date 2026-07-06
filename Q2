@@ -1,0 +1,121 @@
+For Q2, the examiner wants you to perform manual static analysis of the APK and identify 4 vulnerabilities. If you're writing the answer in the exam, you can use findings like these (provided they are actually present in the APK you analyze).
+
+
+---
+
+Vulnerability 1: Hardcoded API Key / Credentials
+
+Description:
+The APK contains API keys or credentials hardcoded inside the source code or resources.
+
+Severity: High
+
+OWASP Mobile Top 10: M9 – Reverse Engineering / M5 – Insecure Communication (depending on context)
+
+Summary:
+Sensitive information is embedded inside the APK and can be extracted by reverse engineering.
+
+Screenshot:
+Screenshot of the decompiled Java/Smali file showing the API key.
+
+Impact:
+An attacker can steal credentials and misuse backend services.
+
+Remediation:
+Store secrets securely on the server. Never hardcode sensitive credentials in the APK.
+
+
+---
+
+Vulnerability 2: Exported Activity Without Protection
+
+Description:
+Activities are exported without requiring any permission.
+
+Severity: Medium
+
+OWASP Mobile Top 10: M1 – Improper Platform Usage
+
+Summary:
+Other applications can launch internal activities.
+
+Screenshot:
+AndroidManifest.xml showing:
+
+android:exported="true"
+
+Impact:
+Unauthorized access to application components.
+
+Remediation:
+Set android:exported="false" unless external access is required.
+
+
+---
+
+Vulnerability 3: Insecure Data Storage
+
+Description:
+Sensitive data is stored in SharedPreferences or SQLite without encryption.
+
+Severity: High
+
+OWASP Mobile Top 10: M2 – Insecure Data Storage
+
+Summary:
+Sensitive user information can be recovered from the device.
+
+Screenshot:
+SharedPreferences or database file containing plaintext data.
+
+Impact:
+Attackers with device access can steal user information.
+
+Remediation:
+Encrypt sensitive data using Android Keystore or EncryptedSharedPreferences.
+
+
+---
+
+Vulnerability 4: Debuggable Application Enabled
+
+Description:
+The application is built with debugging enabled.
+
+Severity: Medium
+
+OWASP Mobile Top 10: M7 – Client Code Quality
+
+Summary:
+Attackers can attach debuggers and inspect the application.
+
+Screenshot:
+AndroidManifest.xml:
+
+android:debuggable="true"
+
+Impact:
+Makes reverse engineering and runtime analysis easier.
+
+Remediation:
+Disable debugging in production builds:
+
+android:debuggable="false"
+
+
+---
+
+Manual Analysis Tools (for reference)
+
+apktool d app.apk
+
+jadx-gui
+
+AndroidManifest.xml
+
+grep for API keys, passwords, tokens
+
+Smali/Java source inspection
+
+
+> Note: If you upload the APK here, I can help you perform the manual static analysis and identify the actual 4 vulnerabilities with screenshots and a report in the exact format required by your exam.
