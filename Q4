@@ -1,0 +1,45 @@
+For Q4 – Nmap Enumeration and Discovery, the required commands are:
+
+1. Discover all live hosts in subnet 10.10.10.0/24 without performing a port scan
+
+nmap -sn 10.10.10.0/24
+
+
+---
+
+2. Perform a TCP Connect Scan against host 10.10.10.15
+
+nmap -sT 10.10.10.15
+
+
+---
+
+3. Scan UDP ports DNS (53), NTP (123), and SNMP (161) on host 10.10.10.20
+
+nmap -sU -p 53,123,161 10.10.10.20
+
+
+---
+
+4. Determine the operating system of host 10.10.10.25
+
+sudo nmap -O 10.10.10.25
+
+> If OS detection is not accurate, use:
+
+
+
+sudo nmap -A 10.10.10.25
+
+
+---
+
+5. Enumerate SSL/TLS information from the HTTPS service running on 10.10.10.30
+
+nmap --script ssl-enum-ciphers -p 443 10.10.10.30
+
+Or, to get certificate details as well:
+
+nmap -p 443 --script ssl-cert,ssl-enum-ciphers 10.10.10.30
+
+These are the standard Nmap commands expected for this question and are suitable as exam answers.
