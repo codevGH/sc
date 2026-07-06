@@ -1,0 +1,196 @@
+Yes. From all the images, Q3 requires reporting 2 vulnerabilities, and each vulnerability should contain all these points together:
+
+1. Description of the vulnerability
+
+
+2. CVSS Score
+
+
+3. URL/URI along with HTTP Request and Response
+
+
+4. OWASP Top 10 Category
+
+
+5. Payload used
+
+
+6. Steps to reproduce
+
+
+7. Screenshots
+
+
+8. Impact
+
+
+9. Remediation
+
+
+
+Below are two complete example reports.
+
+
+---
+
+Vulnerability 1 – SQL Injection
+
+Description
+
+The login page does not properly validate user input, allowing SQL Injection to bypass authentication.
+
+CVSS Score
+
+8.8 (High)
+
+URL
+
+http://demo.testfire.net/login.jsp
+
+HTTP Request
+
+POST /login.jsp HTTP/1.1
+Host: demo.testfire.net
+
+uid=' OR '1'='1' --
+pass=test
+
+HTTP Response
+
+HTTP/1.1 200 OK
+
+Login Successful
+
+OWASP Category
+
+OWASP Top 10 2021 – A03: Injection
+
+Payload Used
+
+' OR '1'='1' --
+
+Steps to Reproduce
+
+1. Open Login page.
+
+
+2. Intercept request using Burp Suite.
+
+
+3. Replace username with ' OR '1'='1' --.
+
+
+4. Send the request.
+
+
+5. Observe successful login or SQL error.
+
+
+
+Screenshots
+
+Burp Suite request
+
+Burp response
+
+Browser output
+
+
+Impact
+
+Authentication bypass
+
+Database information disclosure
+
+Unauthorized access
+
+
+Remediation
+
+Use prepared statements.
+
+Validate user input.
+
+Use parameterized queries.
+
+
+
+---
+
+Vulnerability 2 – Reflected Cross-Site Scripting (XSS)
+
+Description
+
+The application reflects user input without sanitization, allowing JavaScript execution.
+
+CVSS Score
+
+6.1 (Medium)
+
+URL
+
+http://demo.testfire.net/search.jsp
+
+HTTP Request
+
+GET /search.jsp?q=<script>alert(1)</script> HTTP/1.1
+Host: demo.testfire.net
+
+HTTP Response
+
+<script>alert(1)</script>
+
+OWASP Category
+
+OWASP Top 10 2021 – A03: Injection (XSS)
+
+Payload Used
+
+<script>alert(1)</script>
+
+Steps to Reproduce
+
+1. Open the search page.
+
+
+2. Intercept the request with Burp Suite.
+
+
+3. Replace the search parameter with the payload.
+
+
+4. Forward the request.
+
+
+5. Observe the JavaScript alert.
+
+
+
+Screenshots
+
+Burp request
+
+Burp response
+
+Browser alert box
+
+
+Impact
+
+Session hijacking
+
+Cookie theft
+
+Malicious script execution
+
+
+Remediation
+
+Validate and sanitize all user input.
+
+Encode output before displaying it.
+
+Implement a Content Security Policy (CSP).
+
+
+These two complete reports satisfy the format shown in your question paper.
